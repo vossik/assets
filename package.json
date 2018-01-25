@@ -3,7 +3,8 @@
   "description": "Nette initialization + core components",
   "homepage": "https://www.peldax.com",
   "author": "Václav Pelíšek",
-  "license": "MIT",
+  "license": "MIT", 
+  "version": "1.0",
   "dependencies": {
     "admin-lte": "^2.4.2",
     "bootstrap": "^3.3.7",
