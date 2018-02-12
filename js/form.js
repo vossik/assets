@@ -83,6 +83,8 @@ refreshPlugins = function (el)
             autoclose: true,
             fontAwesome: true
         });
+        
+        target.datetimepicker('setValue');
     });
 
     if ($(el).find('.g-recaptcha').length)
