@@ -35,6 +35,11 @@ function refreshPlugins(context)
 {
     $(context).find('.iframePopup').magnificPopup({type: 'iframe'});
     $(context).find('.ajaxPopup').magnificPopup({type: 'ajax'});
+    
+    $(context).find('a[target="__export"]').click(function(event){
+        event.preventDefault();
+        window.open($(this).attr('href'), '_blank', 'status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=640,height=480,directories=no,location=no')
+    });
 }
 
 $(document).ready(function ()
