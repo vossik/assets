@@ -64,24 +64,28 @@ refreshPlugins = function (el)
     var selectInputs = $(el).find('select');
     selectInputs.select2(selectOptions);
 
-    $(el).find('[data-dependentselectbox]').dependentSelectBox();
+    $(el).find('select[data-dependentselectbox]').dependentSelectBox();
     
-    $(el).find('input.date, input.datetime-local').each(function(i, el) {
-        el = $(el);
-        el.get(0).type = 'text';
-        el.datetimepicker({
-            startDate: el.attr('min'),
-            endDate: el.attr('max'),
+    $(el).find('input[type="date"]').each(function(i, input){
+        const value = $(input).val();
+        input.type = 'text';
+        $(input).val(value);
+
+        const target = $(input).parent().hasClass('date') ? $(input).parent() : $(input);
+        target.datetimepicker({
+            startDate: $(input).attr('min'),
+            endDate: $(input).attr('max'),
+            language: $(input).data('language'),
             weekStart: 1,
-            language: el.data('language'),
-            minView: el.is('.date') ? 'month' : 'hour',
-            format: el.is('.date') ? 'd. m. yyyy' : 'd. m. yyyy - hh:ii', // for seconds support use 'd. m. yyyy - hh:ii:ss'
-            autoclose: true
+            bootcssVer: 3,
+            minView: 'month',
+            format: 'd. m. yyyy',
+            autoclose: true,
+            fontAwesome: true
         });
-        el.attr('value') && el.datetimepicker('setValue');
     });
-    
-    if ($('.g-recaptcha').length !== 0)
+
+    if ($(el).find('.g-recaptcha').length)
     {
         g_ReCaptchaOnLoad();
     }
