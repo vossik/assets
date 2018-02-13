@@ -61,30 +61,16 @@ refreshPlugins = function (el)
         this.dispatchEvent(event);
     });
 
-    var selectInputs = $(el).find('select');
-    selectInputs.select2(selectOptions);
-
+    $(el).find('select').select2(selectOptions);
     $(el).find('select[data-dependentselectbox]').dependentSelectBox();
-    
-    $(el).find('input[type="date"]').each(function(i, input){
-        const value = $(input).val();
-        input.type = 'text';
-        $(input).val(value);
-
-        const target = $(input).parent().hasClass('date') ? $(input).parent() : $(input);
-        target.datetimepicker({
-            startDate: $(input).attr('min'),
-            endDate: $(input).attr('max'),
-            language: $(input).data('language'),
-            weekStart: 1,
-            bootcssVer: 3,
-            minView: 'month',
+    $(el).find('input[type="date"]').each(function(index, element) {
+        $(element).pickadate({
+            min: $(element).attr('min'),
+            max: $(element).attr('max'),
             format: 'd. m. yyyy',
-            autoclose: true,
-            fontAwesome: true
+            formatSubmit: 'yyyy-mm-dd',
+            hiddenName: true
         });
-        
-        target.datetimepicker('setValue');
     });
 
     if ($(el).find('.g-recaptcha').length)
