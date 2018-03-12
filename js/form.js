@@ -71,6 +71,9 @@ refreshPlugins = function (el)
             formatSubmit: 'yyyy-mm-dd',
             hiddenName: true
         });
+        if ($(element).val()) {
+            $(element).pickadate('set').set('select', $(element).val(), { format: 'yyyy-mm-dd' });
+        }
     });
 
     if ($(el).find('.g-recaptcha').length)
