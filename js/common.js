@@ -1,21 +1,3 @@
-function redrawControl(control)
-{
-    $.nette.ajax({
-        method: 'GET',
-        traditional: true,
-        url: redrawControlUrl + '&control=' + control
-    });
-}
-
-function redrawRow(control, rowId)
-{
-    $.nette.ajax({
-        method: 'GET',
-        traditional: true,
-        url: redrawRowUrl + '&control=' + control + '&rowId=' + rowId
-    });
-}
-
 function debounce(func, wait, immediate) {
     var timeout;
     return function () {
@@ -51,4 +33,17 @@ $(document).ready(function ()
     $.nette.init();
 
     refreshPlugins(document.body);
+    
+    const cookiePopup = $('#cookie-popup');
+    if (cookiePopup.length && !Cookies.get('cookiePopup'))
+    {
+        cookiePopup.find('button').click(function(event){
+            Cookies.set('cookiePopup', true);
+            cookiePopup.addClass('d-none');
+            cookiePopup.removeClass('d-flex');
+        });
+
+        cookiePopup.addClass('d-flex');
+        cookiePopup.removeClass('d-none');
+    }
 });
