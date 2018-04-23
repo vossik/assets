@@ -1,6 +1,11 @@
 form.form-horizontal
 {
     width: 60%;
+    
+    .form-group.required .control-label::after
+    {
+        content: '*';
+    }
 }
 
 .datagrid .row-grid-bottom .col-per-page
