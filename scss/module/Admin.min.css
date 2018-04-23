@@ -1,1 +1,1 @@
-form.form-horizontal{width:60%}.datagrid .row-grid-bottom .col-per-page{width:6% !important;float:right}
+form.form-horizontal{width:60%}.datagrid .row-grid-bottom .col-per-page{width:6% !important;float:right} .main-header .sidebar-toggle:before { content: '' !important; } .form-group.required .control-label::after {content: '*';}
