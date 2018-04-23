@@ -8,3 +8,8 @@ form.form-horizontal
     width: 6% !important;
     float: right;
 }
+
+.main-header .sidebar-toggle:before
+{
+    content: '' !important;
+}
