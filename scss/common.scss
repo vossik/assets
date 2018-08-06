@@ -33,3 +33,15 @@
         padding: 3px !important;
     }
 }
+
+p.collapse.collapse-partial[aria-expanded="false"] 
+{
+    display: block;
+    height: 42px !important;
+    overflow: hidden !important;
+}  
+
+p.collapsing.collapse-partial[aria-expanded="false"] 
+{
+    height: 42px !important;
+}
