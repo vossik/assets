@@ -18,7 +18,7 @@ function refreshPlugins(context)
     $(context).find('.iframePopup').magnificPopup({type: 'iframe'});
     $(context).find('.ajaxPopup').magnificPopup({type: 'ajax'});
     $(context).find('.imagePopup').magnificPopup({type: 'image'});
-    $(context).find('.galleryPopup').magnificPopup({type: 'image', delegate: 'a', gallery:{enabled:true}});
+    $(context).find('.galleryPopup').magnificPopup({type: 'image', delegate: 'a.galleryItem', gallery:{enabled:true}});
     $(context).find('[data-toggle="tooltip"]').tooltip();
     $(context).find('a[target="_export"], a.exportLnk').click(function(event){
         event.preventDefault();
