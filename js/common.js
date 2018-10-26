@@ -13,6 +13,31 @@ function debounce(func, wait, immediate) {
     };
 }
 
+function initPhotoswipe(photoswipe) {
+    var items = [];
+    photoswipe.find('a.galleryItem').each(function() {
+        var size = $(this).data('size').split('x');
+        var item = {src: $(this).attr('href'), title: $(this).data('caption'), w: size[0], h: size[1]};
+        items.push(item);
+    });
+    photoswipe.on('click', 'a.galleryItem', function(event) {
+        event.preventDefault();
+        var options = {
+            index: photoswipe.find('a.galleryItem').index(this),
+            bgOpacity: 0.85,
+            showHideOpacity: true,
+            pinchToClose: false,
+            closeOnScroll: false,
+            clickToCloseNonZoomable: false,
+            shareButtons: [
+                {id:'download', label:'Download image', url:'{{raw_image_url}}', download:true}
+            ]
+        };
+        var lightBox = new PhotoSwipe($('.pswp')[0], PhotoSwipeUI_Default, items, options);
+        lightBox.init();
+    });
+};
+
 function refreshPlugins(context)
 {
     $(context).find('.iframePopup').magnificPopup({type: 'iframe'});
@@ -20,9 +45,17 @@ function refreshPlugins(context)
     $(context).find('.imagePopup').magnificPopup({type: 'image'});
     $(context).find('.galleryPopup').magnificPopup({type: 'image', delegate: 'a.galleryItem', gallery:{enabled:true}});
     $(context).find('[data-toggle="tooltip"]').tooltip();
+    $(context).find('[data-toggle="popover"]').popover({
+        html: true,
+        content: function() {return $($(this).data('target')[0]).html();},
+        trigger: 'hover focus'
+    });
     $(context).find('a[target="_export"], a.exportLnk').click(function(event){
         event.preventDefault();
         window.open($(this).attr('href'), '_blank', 'status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=640,height=480,directories=no,location=no')
+    });
+    $(context).find('.photoswipe').each(function() {
+        initPhotoswipe($(this));
     });
 }
 
