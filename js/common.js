@@ -13,6 +13,37 @@ function debounce(func, wait, immediate) {
     };
 }
 
+var popoverCache = new Object();
+
+function getPopover(popover)
+{
+    if (popover.data('element'))
+    {
+        return $(popover.data('element')[0]).html();
+    }
+
+    var divId = 'popover' + $.now();
+
+    if (popover.data('ajax'))
+    {
+        if (popoverCache[popover.data('ajax')])
+        {
+            return popoverCache[popover.data('ajax')];
+        }
+
+        $.nette.ajax({
+            url: popover.data('ajax'),
+            method: 'GET',
+            success: function (payload){
+                popoverCache[popover.data('ajax')] = payload.html;
+                $('#' + divId).html(payload.html);
+            }
+        });
+    }
+
+    return '<div id="'+ divId +'">Loading...</div>';;
+}
+
 function initPhotoswipe(photoswipe) {
     var items = [];
     photoswipe.find('a.galleryItem').each(function() {
@@ -47,7 +78,8 @@ function refreshPlugins(context)
     $(context).find('[data-toggle="tooltip"]').tooltip();
     $(context).find('[data-toggle="popover"]').popover({
         html: true,
-        content: function() {return $($(this).data('target')[0]).html();},
+        container: 'body',
+        content: function() {return getPopover($(this));},
         trigger: 'hover focus'
     });
     $(context).find('a[target="_export"], a.exportLnk').click(function(event){
