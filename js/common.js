@@ -13,7 +13,7 @@ function debounce(func, wait, immediate) {
     };
 }
 
-var popoverCache = new Object();
+var popoverCache = {};
 
 function getPopover(popover)
 {
@@ -41,7 +41,7 @@ function getPopover(popover)
         });
     }
 
-    return '<div id="'+ divId +'">Loading...</div>';;
+    return '<div id="'+ divId +'">Loading...</div>';
 }
 
 function initPhotoswipe(photoswipe) {
@@ -67,7 +67,18 @@ function initPhotoswipe(photoswipe) {
         var lightBox = new PhotoSwipe($('.pswp')[0], PhotoSwipeUI_Default, items, options);
         lightBox.init();
     });
-};
+}
+
+function initGoogleMaps() {
+    $(document).ready(function(){
+        $(document.body).find('.googleMap').each(function() {
+            var mapProp = {
+                center: new google.maps.LatLng($(this).data('lat'), $(this).data('lng')),
+                zoom: $(this).data('zoom')};
+            var map = new google.maps.Map($(this)[0], mapProp);
+        });
+    });
+}
 
 function refreshPlugins(context)
 {
@@ -75,6 +86,7 @@ function refreshPlugins(context)
     $(context).find('.ajaxPopup').magnificPopup({type: 'ajax'});
     $(context).find('.imagePopup').magnificPopup({type: 'image'});
     $(context).find('.galleryPopup').magnificPopup({type: 'image', delegate: 'a.galleryItem', gallery:{enabled:true}});
+    $(context).find('.photoswipe').each(function() {initPhotoswipe($(this));});
     $(context).find('[data-toggle="tooltip"]').tooltip();
     $(context).find('[data-toggle="popover"]').popover({
         html: true,
@@ -82,12 +94,9 @@ function refreshPlugins(context)
         content: function() {return getPopover($(this));},
         trigger: 'hover focus'
     });
-    $(context).find('a[target="_export"], a.exportLnk').click(function(event){
+    $(context).find('[target="_export"], a.exportLnk').click(function(event){
         event.preventDefault();
         window.open($(this).attr('href'), '_blank', 'status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=640,height=480,directories=no,location=no')
-    });
-    $(context).find('.photoswipe').each(function() {
-        initPhotoswipe($(this));
     });
 }
 
