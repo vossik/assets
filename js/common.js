@@ -13,35 +13,32 @@ function debounce(func, wait, immediate) {
     };
 }
 
-var popoverCache = {};
-
-function getPopover(popover)
+function initPopover(elm)
 {
-    if (popover.data('element'))
+    if (elm.data('element'))
     {
-        return $(popover.data('element')[0]).html();
+        elm.popover({
+            html: true,
+            container: 'body',
+            content: $(elm.data('element')[0]).html(),
+            trigger: 'hover focus'
+        }).popover('show');
     }
-
-    var divId = 'popover' + $.now();
-
-    if (popover.data('ajax'))
+    else if (elm.data('ajax'))
     {
-        if (popoverCache[popover.data('ajax')])
-        {
-            return popoverCache[popover.data('ajax')];
-        }
-
         $.nette.ajax({
-            url: popover.data('ajax'),
+            url: elm.data('ajax'),
             method: 'GET',
             success: function (payload){
-                popoverCache[popover.data('ajax')] = payload.html;
-                $('#' + divId).html(payload.html);
+                elm.popover({
+                    html: true,
+                    container: 'body',
+                    content: payload.html,
+                    trigger: 'hover focus'
+                }).popover('show');
             }
         });
     }
-
-    return '<div id="'+ divId +'">Loading...</div>';
 }
 
 function initPhotoswipe(photoswipe) {
@@ -88,12 +85,7 @@ function refreshPlugins(context)
     $(context).find('.galleryPopup').magnificPopup({type: 'image', delegate: 'a.galleryItem', gallery:{enabled:true}});
     $(context).find('.photoswipe').each(function() {initPhotoswipe($(this));});
     $(context).find('[data-toggle="tooltip"]').tooltip();
-    $(context).find('[data-toggle="popover"]').popover({
-        html: true,
-        container: 'body',
-        content: function() {return getPopover($(this));},
-        trigger: 'hover focus'
-    });
+    $(context).find('[data-toggle="popover"]').one('mouseenter', function(event) {initPopover($(this));});
     $(context).find('[target="_export"], a.exportLnk').click(function(event){
         event.preventDefault();
         window.open($(this).attr('href'), '_blank', 'status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=640,height=480,directories=no,location=no')
