@@ -35,7 +35,11 @@ function initPopover(elm)
                     container: 'body',
                     content: payload.html,
                     trigger: 'hover focus'
-                }).popover('show');
+                });
+                if (elm.is(':hover'))
+                {
+                    elm.popover('show');
+                }
             }
         });
     }
