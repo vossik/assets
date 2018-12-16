@@ -73,10 +73,10 @@ function initPhotoswipe(photoswipe) {
 function initGoogleMaps() {
     $(document).ready(function(){
         $(document.body).find('.googleMap').each(function() {
-            var mapProp = {
-                center: new google.maps.LatLng($(this).data('lat'), $(this).data('lng')),
-                zoom: $(this).data('zoom')};
+            var center = new google.maps.LatLng($(this).data('lat'), $(this).data('lng'));
+            var mapProp = { center: center, zoom: $(this).data('zoom')};
             var map = new google.maps.Map($(this)[0], mapProp);
+            var marker = new google.maps.Marker({ position: center, map: map, title: 'Zde' });
         });
     });
 }
