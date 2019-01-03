@@ -61,7 +61,34 @@ refreshPlugins = function (el)
         this.dispatchEvent(event);
     });
 
-    $(el).find('select').select2(selectOptions);
+    $(el).find('select').not('[data-ajax]').select2(selectOptions);
+    $(el).find('select[data-ajax]').each(function() {
+        $(this).select2(Object.assign(selectOptions, {
+            tokenSeparators: [',', ' '],
+            ajax: {
+                url: $(this).data('ajax'),
+                delay: 250,
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: params.term
+                    };
+                },
+                processResults: function (data, params) {
+                    var result = [];
+                    $.each(data, function (key,  value) {
+                        result.push({
+                            id: key,
+                            text: value
+                        });
+                    });
+                    return {
+                        results: result
+                    };
+                }
+            }
+        }));
+    });
     $(el).find('select[data-dependentselectbox]').dependentSelectBox();
     $(el).find('input[type="date"]').each(function(index, element) {
         $(element).pickadate({
