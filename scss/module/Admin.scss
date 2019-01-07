@@ -8,6 +8,13 @@ form.form-horizontal
     }
 }
 
+.datagrid .row-grid-bottom .col-per-page
+{
+    width: 6% !important;
+    min-width: 102px !important;
+    float: right;
+}
+
 .main-header .sidebar-toggle:before
 {
     content: '' !important;
