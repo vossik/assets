@@ -61,33 +61,36 @@ refreshPlugins = function (el)
         this.dispatchEvent(event);
     });
 
-    $(el).find('select').not('[data-ajax]').select2(selectOptions);
-    $(el).find('select[data-ajax]').each(function() {
-        $(this).select2(Object.assign(selectOptions, {
-            tokenSeparators: [',', ' '],
-            ajax: {
-                url: $(this).data('ajax'),
-                delay: 250,
-                dataType: 'json',
-                data: function (params) {
-                    return {
-                        q: params.term
-                    };
-                },
-                processResults: function (data, params) {
-                    var result = [];
-                    $.each(data, function (key,  value) {
-                        result.push({
-                            id: key,
-                            text: value
+    $(el).find('select').each(function() {
+        var options = Object.assign({}, selectOptions);
+        if ($(this).data('ajaxselect')) {
+            options = Object.assign(options, {
+                tokenSeparators: [',', ' '],
+                ajax: {
+                    url: $(this).data('ajaxselect'),
+                    delay: 250,
+                    dataType: 'json',
+                    data: function (params) {
+                        return {
+                            q: params.term
+                        };
+                    },
+                    processResults: function (data, params) {
+                        var result = [];
+                        $.each(data, function (key, value) {
+                            result.push({
+                                id: key,
+                                text: value
+                            });
                         });
-                    });
-                    return {
-                        results: result
-                    };
+                        return {
+                            results: result
+                        };
+                    }
                 }
-            }
-        }));
+            });
+        }
+        $(this).select2(options);
     });
     $(el).find('select[data-dependentselectbox]').dependentSelectBox();
     $(el).find('select').on('select2:select', function (event) {
