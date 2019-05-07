@@ -18,7 +18,7 @@
     "jquery": "^3.2.1",
     "magnific-popup": "^1.1.0",
     "photoswipe": "^4.1.2",
-    "nette-forms": "^2.4.2",
+    "nette-forms": "^3.0.2",
     "nette.ajax.js": "^2.3.0",
     "nextras-forms": "^2.0.1",
     "nas-ext-dependent-select-box": "^2.7",
