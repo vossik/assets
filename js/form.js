@@ -61,7 +61,7 @@ refreshPlugins = function (el)
         this.dispatchEvent(event);
     });
 
-    $(el).find('select').each(function() {
+    $(el).find('select').not('[data-init-plugin]').each(function() {
         var options = Object.assign({}, selectOptions);
         if ($(this).data('ajaxselect')) {
             options = Object.assign(options, {

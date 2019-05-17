@@ -29,14 +29,14 @@
     }
 }
 
-p.collapse.collapse-partial[aria-expanded="false"] 
+p.collapse.collapse-partial:not(.show)
 {
     display: block;
     height: 42px !important;
     overflow: hidden !important;
 }  
 
-p.collapsing.collapse-partial[aria-expanded="false"] 
+p.collapsing.collapse-partial:not(.show)
 {
-    height: 42px !important;
+    min-height: 42px !important;
 }
