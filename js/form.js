@@ -93,14 +93,6 @@ refreshPlugins = function (el)
         $(this).select2(options);
     });
     $(el).find('select[data-dependentselectbox]').dependentSelectBox();
-    $(el).find('select').on('select2:select', function (event) {
-        event = document.createEvent('HTMLEvents');
-        event.initEvent('change', true, true);
-        event.eventName = 'change';
-
-        this.dispatchEvent(event);
-    });
-    
     $(el).find('input[type="date"]').each(function(index, element) {
         $(element).pickadate({
             min: $(element).attr('min'),
