@@ -63,11 +63,12 @@ refreshPlugins = function (el)
 
     $(el).find('select').not('[data-init-plugin]').each(function() {
         var options = Object.assign({}, selectOptions);
-        if ($(this).data('ajaxselect')) {
+        var select = $(this);
+        if (select.data('ajaxselect')) {
             options = Object.assign(options, {
                 tokenSeparators: [',', ' '],
                 ajax: {
-                    url: $(this).data('ajaxselect'),
+                    url: select.data('ajaxselect'),
                     delay: 250,
                     dataType: 'json',
                     data: function (params) {
@@ -90,7 +91,8 @@ refreshPlugins = function (el)
                 }
             });
         }
-        $(this).select2(options);
+        select.select2(options);
+        select.closest('form').on('reset', function (e) { select.change();});
     });
     $(el).find('select[data-dependentselectbox]').dependentSelectBox();
     $(el).find('input[type="date"]').each(function(index, element) {
