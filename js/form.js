@@ -66,7 +66,7 @@ refreshPlugins = function (el)
         var select = $(this);
         if (select.data('ajaxselect')) {
             options = Object.assign(options, {
-                tokenSeparators: [',', ' '],
+                tokenSeparators: [','],
                 ajax: {
                     url: select.data('ajaxselect'),
                     delay: 250,
