@@ -91,6 +91,17 @@ refreshPlugins = function (el)
                 }
             });
         }
+        if (select.data('onchange')) {
+            select.on('change', function(e) {
+                 $.nette.ajax({
+                     method: 'GET',
+                     url: select.data('onchange'),
+                     data: {
+                         s: $(this).val(),
+                     }
+                 });
+            });
+        }
         select.select2(options);
         select.closest('form').on('reset', function (e) { select.change();});
     });
