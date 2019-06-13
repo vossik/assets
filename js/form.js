@@ -92,14 +92,23 @@ refreshPlugins = function (el)
             });
         }
         if (select.data('onchange')) {
-            select.on('change', function(e) {
-                 $.nette.ajax({
-                     method: 'GET',
-                     url: select.data('onchange'),
-                     data: {
-                         s: $(this).val(),
-                     }
-                 });
+            var currentQuery;
+            select.on('select2:open', function() {
+                setTimeout(function() {
+                    if(currentQuery && currentQuery.length) {
+                        $('.select2-search input').val(currentQuery).trigger('input');
+                    };
+                }, 0);
+            }).on('select2:closing', function() {
+                currentQuery = $('.select2-search input').prop('value');
+            }).on('change', function(e) {
+                $.nette.ajax({
+                    method: 'GET',
+                    url: select.data('onchange'),
+                    data: {
+                        s: $(this).val(),
+                    }
+                });
             });
         }
         select.select2(options);
