@@ -116,12 +116,16 @@ refreshPlugins = function (el)
     });
     $(el).find('select[data-dependentselectbox]').dependentSelectBox();
     $(el).find('input[type="date"]').each(function(index, element) {
-        $(element).pickadate({
-            min: $(element).attr('min'),
-            max: $(element).attr('max'),
-            format: 'd. m. yyyy',
+        var isPeriodic = $(element).hasClass('date-periodic');
+        var picker = $(element).pickadate({
+            min: isPeriodic ? new Date('1112-1-1') : $(element).attr('min'),
+            max: isPeriodic ? new Date('1112-12-31') : $(element).attr('max'),
+            format: isPeriodic ? 'd. m.' : 'd. m. yyyy',
             formatSubmit: 'yyyy-mm-dd',
-            hiddenName: true
+            hiddenName: true,
+            klass: {
+                year: isPeriodic ? 'd-none' : 'picker__year',
+            }
         });
         if ($(element).val()) {
             $(element).pickadate('set').set('select', $(element).val(), { format: 'yyyy-mm-dd' });
