@@ -81,21 +81,6 @@ function initGoogleMaps() {
     });
 }
 
-function initPlugins(context)
-{
-    $(context).find('.iframePopup').magnificPopup({type: 'iframe'});
-    $(context).find('.ajaxPopup').magnificPopup({type: 'ajax'});
-    $(context).find('.imagePopup').magnificPopup({type: 'image'});
-    $(context).find('.galleryPopup').magnificPopup({type: 'image', delegate: 'a.galleryItem', gallery:{enabled:true}});
-    $(context).find('.photoswipe').each(function() {initPhotoswipe($(this));});
-    $(context).find('[data-toggle="tooltip"]').tooltip();
-    $(context).find('[data-toggle="popover"]').one('mouseenter', function(event) {initPopover($(this));});
-    $(context).find('[target="_export"], a.exportLnk').click(function(event){
-        event.preventDefault();
-        window.open($(this).attr('href'), '_blank', 'status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=640,height=480,directories=no,location=no')
-    });
-}
-
 var refreshPlugins = [];
 
 refreshPlugins.push(function(el) {
